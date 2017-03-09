@@ -1,0 +1,53 @@
+%% Initialization Machine Learning Exercise 2
+clear all; close all; clc
+%% ======================= Question 1: Prove =======================
+% question 1
+x = linspace(-2,2);
+y1 = x;
+y2 = y1+log((1-x));
+figure;
+plot(x,y2);
+% hold on;
+% plot(x,y2);
+% hold off;
+% legend('y1','y2');
+%% ======================= Question 2: weak learner =======================
+
+x = [0.7 0.3 0.2; 2.1 4.5 0];
+
+load datafiles.mat
+x = X; % 2 features
+y = Y; % 200 samples
+w = ones(size(x,1), 1); % Give each object a weight w=1
+stump = stump(x,y)
+
+
+function [stump]=stump(x,y)
+d = size(X,2) % number of features
+stump = cell(d,1);
+werr = zeros(d,1);
+for i = 1:d
+stump{i} = stump_onedim(x(:,i),y); % go through each feature
+stump{i}.ind = i;
+werr(i) = stump{i}.werr;
+end
+[min_werr,ind] = min(werr);
+stump = stump{ind(1)}; % return the most optimal stump
+---------------------------------------
+function [stump] = stump_onedim(x,y)
+[sorted,I] = sort(x);
+Ir = I(end:-1:1);
+score_left = cumsum(y(I));
+score_right= cumsum(y(Ir));
+score = -score_left(1:end-1) + score_right(end-1:-1:1); % score the boundary
+Idec = find(sorted(1:end-1)<sorted(2:end)); % find distinguishable points
+if(length(Idec)>0)
+[maxscore,ind] = max(abs(score(Idec)));
+ind = Idec(ind(1));
+stump.werr = 0.5 - 0.5*maxscore; % weighted error
+stump.x0 = (sorted(ind)+sorted(ind+1))/2; % threshold
+stump.s = sign(score(ind));
+else
+stump.werr = 0.5;
+stump.x0 = 0;
+stump.

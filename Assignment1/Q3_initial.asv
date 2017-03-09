@@ -1,0 +1,24 @@
+%% Initialization
+clear all; close all; clc
+%% Question 3
+fprintf('Running Gradient Descent ...\n')
+%% Load file
+data = load('optdigitsubset.txt');
+num = length(data);
+X = data((1:num),:);
+% initialize fitting parameters
+initial_mn = zeros(1,64); 
+initial_mp = zeros(64,1);
+lambda = [0 2 4 6];
+
+% Some gradient descent settings
+iterations = 300;
+alpha = 0.01;
+% compute initial cost
+L_initial = lossFunction(initial_mn,initial_mp,X,lambda(1));
+% test
+[dF_mp,dF_mn] = derivative(X,initial_mp,initial_mn,lambda);
+% run gradient descent
+[mn,mp] = gradientDescent(X, initial_mn, initial_mp, alpha, iterations,lambda);
+
+%GDD = gradientdescent(initial_mn,initial_mp,);
