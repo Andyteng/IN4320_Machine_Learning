@@ -96,86 +96,21 @@ clear all; close all; clc
 % error_std = std(error_r);
 
 %% Question e--adaboost
+% 1: basic data
+% 2: gendats
+% 3: complicate dataset gendatb
+[x, y] = input_data(3);
 
-load data_x.mat
-load data_y.mat
-data = load ('optdigitsubset.txt');
+T = 4; % Number of iteration
 
-case_condition = 1;
+% call AdaBoost
+error_f = AdaBoost(x,y,T);
 
-switch case_condition
-    case 1
-        test = prdataset(a,labels);
-        y =labels;
-        for i = 1: size(test,1)
-             if y(i) == 2
-                 y(i) = -1; 
-             else
-                 y(i) = 1;
-             end
-        end
-    case 2
-      test = gendats(100);
-      y = test.labels;
-              y =labels;
-        for i = 1: size(test,1)
-             if y(i) == 2
-                 y(i) = -1; 
-             else
-                 y(i) = 1;
-             end
-        end
-    case 3
-    otherwise
-end
+ 
 
-% class0 = data((1:554),:);
-% class1 = data((555:end),:);
-% idx0 = randperm(size(class0,1),50);
-% idx1 = randperm(size(class1,1),50);
-% r0 = class0(idx0,:);
-% r1 = class1(idx1,:);
-% r = [r0;r1];
-% y = [ones(50,1).*(-1);ones(50,1)];
-% input1 = prdataset(r,y);
+ 
 
-% x = a;
-% y = labels;
-% for i = 1: length(y)
-%     if y(i) == 2
-%         y(i) = -1; 
-%     end
-% end
-% input1 = prdataset(x,y);
-
-
-%test = gendatb(100);
-%test = gendats(100);
-% y = test.labels;
-
-
-
-N = length(y); % X training labels
-w = 1/N * ones(N,1); %Weights initialization
-T = 3; % Number of iteration
-for t=1:T
-    p = w ./ sum(w);
-    [f_opt,thea_opt,h] = stump(test,p); % call weak learner
-    display(thea_opt);
-    error = sum(p.*abs(sign(h-y)));
-    beta = error/(1-error);
-    w = w.*(beta.^(ones(100,1)-abs(h-y)));
-    
-    % used to test threshold
-figure;
-scatterd(test,'legend');
-hold on;
-stem(thea_opt, 4,'b');
-stem(thea_opt, -4, 'b');
-title('Decision Stump');
-xlabel('feature 1');
-ylabel('feature 2');
-end
+ 
 
 
 
