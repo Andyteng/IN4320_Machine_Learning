@@ -99,7 +99,8 @@ clear all; close all; clc
 % 1: basic data
 % 2: gendats
 % 3: complicate dataset gendatb
-[x, y] = input_data(3);
+% x is a dataset and y is the label of x
+[x, y] = input_data(4);
 
 T = 4; % Number of iteration
 

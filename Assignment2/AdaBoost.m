@@ -6,6 +6,7 @@ w = 1/N * ones(N,1); %Weights initialization
 h = zeros(N,T);
 beta = zeros(1,T);
 error = zeros(T,1);
+
 for t=1:T
     p = w ./ sum(w);
     [f_opt,thea_opt,h(:,t)] = stump(x,p); % call weak learner
@@ -16,11 +17,12 @@ for t=1:T
     w = w.*(beta(1,t).^(ones(100,1)-abs(sign(h(:,t)-y))));
     
 
-    % used to test threshold
-    flag = 1;
+    % used to test the code by drawing the threshold 
+    flag = 2;
+    
     if flag == 1
     figure;
-    scatterd(x,'legend');
+    scatterd(x);
     hold on;
     top = max(x.data(:,2));
     bottom = min(x.data(:,2));

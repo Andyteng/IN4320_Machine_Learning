@@ -55,7 +55,7 @@ switch case_condition
         a3 = [train_0; train_1];
         x = prdataset(a3,labels);
         y = labels;
-        for i = 1: size(x,1)
+        for i = 1: size(test,1)
              if y(i) == 2
                  y(i) = -1; 
              else
